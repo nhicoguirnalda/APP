@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tally — Scan. Name. Price. Profit.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="screens.css?v=3">
+</head>
+<body>
+
+<!-- ============ art + icon sprite ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="art-mug" viewBox="0 0 120 120">
+      <ellipse cx="56" cy="97" rx="27" ry="4.6" fill="#14150F" opacity=".09"/>
+      <path d="M83 48h5a13 13 0 0 1 0 26h-6" fill="none" stroke="#14150F" stroke-width="5" stroke-linecap="round"/>
+      <path d="M31 38h50v36a25 25 0 0 1-25 25 25 25 0 0 1-25-25V38Z" fill="#F6F2E7" stroke="#14150F" stroke-width="2.6" stroke-linejoin="round"/>
+      <clipPath id="mugClip"><path d="M31 38h50v36a25 25 0 0 1-25 25 25 25 0 0 1-25-25V38Z"/></clipPath>
+      <rect x="31" y="52" width="50" height="13" fill="#A9B79F" clip-path="url(#mugClip)"/>
+      <path d="M46 24c-3-4 3-6 0-10M60 22c-3-4 3-6 0-10M74 24c-3-4 3-6 0-10" stroke="#A9B79F" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="art-camera" viewBox="0 0 120 120">
+      <ellipse cx="60" cy="98" rx="32" ry="5" fill="#14150F" opacity=".10"/>
+      <rect x="22" y="34" width="76" height="54" rx="13" fill="#F6F2E7" stroke="#14150F" stroke-width="2.6"/>
+      <rect x="26" y="38" width="68" height="13" rx="7" fill="#A9B79F"/>
+      <rect x="38" y="27" width="18" height="8" rx="3" fill="#14150F"/>
+      <circle cx="60" cy="62" r="19" fill="#CBD5C2" stroke="#14150F" stroke-width="2.6"/>
+      <circle cx="60" cy="62" r="11" fill="#14150F"/>
+      <circle cx="56" cy="58" r="3.6" fill="#F6F2E7" opacity=".85"/>
+      <circle cx="86" cy="45" r="3" fill="#14150F"/>
+    </symbol>
+    <symbol id="art-tote" viewBox="0 0 120 120">
+      <ellipse cx="60" cy="99" rx="30" ry="4.5" fill="#14150F" opacity=".10"/>
+      <path d="M43 42v-7a17 17 0 0 1 34 0v7" fill="none" stroke="#14150F" stroke-width="4" stroke-linecap="round"/>
+      <path d="M28 40h64l5 47a11 11 0 0 1-11 12H34a11 11 0 0 1-11-12l5-47Z" fill="#F6F2E7" stroke="#14150F" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M28 40h64l1.2 11H26.8L28 40Z" fill="#A9B79F"/>
+      <path d="M47 62v20M60 62v20M73 62v20" stroke="#14150F" stroke-width="1.4" opacity=".16"/>
+    </symbol>
+    <symbol id="art-lamp" viewBox="0 0 120 120">
+      <ellipse cx="60" cy="98" rx="28" ry="5" fill="#14150F" opacity=".10"/>
+      <path d="M32 47a28 28 0 0 1 56 0H32Z" fill="#A9B79F" stroke="#14150F" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M42 41a19 19 0 0 1 36 0" stroke="#F6F2E7" stroke-width="2" opacity=".45" fill="none"/>
+      <rect x="56" y="47" width="8" height="34" rx="3" fill="#14150F"/>
+      <ellipse cx="60" cy="87" rx="26" ry="7" fill="#14150F"/>
+      <ellipse cx="60" cy="85.5" rx="26" ry="6" fill="#2A2C22"/>
+    </symbol>
+    <symbol id="art-bowl" viewBox="0 0 120 120">
+      <ellipse cx="60" cy="96" rx="24" ry="4" fill="#14150F" opacity=".10"/>
+      <path d="M20 52h80c0 22-18 38-40 38S20 74 20 52Z" fill="#F6F2E7" stroke="#14150F" stroke-width="2.6" stroke-linejoin="round"/>
+      <ellipse cx="60" cy="52" rx="40" ry="9" fill="#A9B79F" stroke="#14150F" stroke-width="2.6"/>
+      <path d="M44 86h32" stroke="#14150F" stroke-width="2" opacity=".25"/>
+    </symbol>
+    <symbol id="art-notebook" viewBox="0 0 120 120">
+      <ellipse cx="60" cy="99" rx="26" ry="4" fill="#14150F" opacity=".10"/>
+      <rect x="31" y="22" width="58" height="76" rx="7" fill="#F6F2E7" stroke="#14150F" stroke-width="2.6"/>
+      <path d="M31 29a7 7 0 0 1 7-7h7v76h-7a7 7 0 0 1-7-7V29Z" fill="#A9B79F"/>
+      <path d="M58 40h20M58 52h20M58 64h13" stroke="#14150F" stroke-width="2" stroke-linecap="round" opacity=".26"/>
+      <path d="M84 22v76" stroke="#14150F" stroke-width="2" opacity=".18"/>
+      <path d="M45 22v76" stroke="#14150F" stroke-width="1.6" opacity=".18"/>
+    </symbol>
+
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.6 12 4l8 6.6V19a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 19v-8.4Z"/><path d="M9.6 20.6v-6.2h4.8v6.2"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.6 7.8 12 3.4l8.4 4.4v8.4L12 20.6l-8.4-4.4V7.8Z"/><path d="M3.6 7.8 12 12.2l8.4-4.4M12 12.2v8.4"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><rect x="2.8" y="6.8" width="18.4" height="13.4" rx="3.4"/><path d="M8.4 6.8 9.8 3.8h4.4l1.4 3"/><circle cx="12" cy="13.4" r="4.1"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3.4 20.2h17.2"/><path d="M6.6 20v-7.4M11.9 20V4.6M17.2 20v-11"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5.4 3.4h13.2v17.2l-2.6-1.8-2.2 1.8-2-1.8-2.2 1.8-2.4-1.8-1.8 1.8V3.4Z"/><path d="M8.6 8.2h6.8M8.6 12h6.8M8.6 15.4h4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="M20 20l-4.4-4.4"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9.5 5.5 16 12l-6.5 6.5"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.5 2.5 0 0 0-3.5-3.5L4 16.5V20Z"/><path d="M14.5 6.5 17.5 9.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.4 6.4l11.2 11.2M17.6 6.4 6.4 17.6"/></symbol>
+    <symbol id="i-flash" viewBox="0 0 24 24"><path d="M13.4 2.2 5 13.4h5.2l-.6 8.4L18.4 10h-5.3l.3-7.8Z"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4.4" width="18" height="15.2" rx="2.8"/><circle cx="8.6" cy="9.8" r="1.6"/><path d="M20.4 16.4 15 11l-8.4 8.6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.6 9.6 17.2 19.2 7"/></symbol>
+    <symbol id="i-del" viewBox="0 0 24 24"><path d="M9 5.4h10.4a2 2 0 0 1 2 2v9.2a2 2 0 0 1-2 2H9L2.4 12 9 5.4Z"/><path d="M16.4 9.2 11.6 14M11.6 9.2l4.8 4.8"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M7.5 17.5 17 7M8.6 7H17v8.4"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.4 5.4 13.2h5.1l-.7 8.4L17.8 10h-5.2l.4-7.6Z"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="2.6" y="5.2" width="18.8" height="13.6" rx="3"/><path d="M2.6 9.8h18.8"/><path d="M6 15.4h4"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2.8 6.4h10.4v10.4H2.8z"/><path d="M13.2 10h4l3.2 3.4v3.4h-7.2"/><circle cx="6.6" cy="18.4" r="1.8"/><circle cx="17.2" cy="18.4" r="1.8"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3.4l1.7 5.3 5.3 1.7-5.3 1.7L12 17.4l-1.7-5.3L5 10.4l5.3-1.7L12 3.4Z"/><path d="M18.6 16.4l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.4 12.6 12.6 20.4 3.6 20.4v-9l7.8-7.8h9v9Z"/><circle cx="16.2" cy="7.8" r="1.4"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.6 21 20.4H3L12 3.6Z"/><path d="M12 9.4v5M12 17.2v.1"/></symbol>
+  </defs>
+</svg>
+
+<div class="stage">
+  <div class="grain"></div>
+
+  <aside class="rail">
+    <div class="brand">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F6F2E7" stroke-width="2" stroke-linecap="round">
+          <path d="M7 5v14M12 5v14M17 5v14"/>
+          <path d="M5.5 18.5 19 6" stroke="#A9B79F"/>
+        </svg>
+      </span>
+      <div>
+        <div class="wordmark">tally</div>
+        <div class="tagline">Scan · Name · Price · Profit</div>
+      </div>
+    </div>
+
+    <p class="rail-copy">A calm inventory and pricing companion for makers and small shops. Scan an item, name it, price it — and see exactly where the money goes.</p>
+
+    <div class="rail-block">
+      <p class="rail-label">Screens</p>
+      <nav class="rail-nav">
+        <button class="active" data-go="home"><span class="idx">01</span><span class="lbl">Overview</span><span class="arrow">→</span></button>
+        <button data-go="scan"><span class="idx">02</span><span class="lbl">Scan an item</span><span class="arrow">→</span></button>
+        <button data-go="inventory"><span class="idx">03</span><span class="lbl">Inventory</span><span class="arrow">→</span></button>
+        <button data-go="item"><span class="idx">04</span><span class="lbl">Item detail</span><span class="arrow">→</span></button>
+        <button data-go="insights"><span class="idx">05</span><span class="lbl">Insights</span><span class="arrow">→</span></button>
+        <button data-go="expenses"><span class="idx">06</span><span class="lbl">Expenses</span><span class="arrow">→</span></button>
+      </nav>
+    </div>
+
+    <div class="rail-block">
+      <p class="rail-label">Palette</p>
+      <div class="palette">
+        <div class="sw"><i style="background:#F6F2E7"></i><b>Cream</b><span>F6F2E7</span></div>
+        <div class="sw"><i style="background:#FFFFFF"></i><b>White</b><span>FFFFFF</span></div>
+        <div class="sw"><i style="background:#14150F"></i><b>Black</b><span>14150F</span></div>
+        <div class="sw"><i style="background:#A9B79F"></i><b>Sage</b><span>A9B79F</span></div>
+      </div>
+    </div>
+
+    <p class="rail-note"><b>Interactive prototype.</b><br>Tap through the phone — scanning, pricing and expense flows are live. All data is sample content.</p>
+  </aside>
+
+  <main class="device-wrap">
+    <div class="device" id="device">
+      <div class="screen-host">
+
+        <div class="island"></div>
+
+        <div class="statusbar" id="statusbar">
+          <span class="time">9:41</span>
+          <span class="sb-icons">
+            <svg viewBox="0 0 17 12" width="17" height="12"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="4.5" y="6" width="3" height="6" rx="1" fill="currentColor"/><rect x="9" y="3.5" width="3" height="8.5" rx="1" fill="currentColor"/><rect x="13.5" y="1" width="3" height="11" rx="1" fill="currentColor"/></svg>
+            <svg viewBox="0 0 16 12" width="16" height="12"><path d="M1.2 4.2a9.6 9.6 0 0 1 13.6 0M3.6 6.7a6.2 6.2 0 0 1 8.8 0M6.1 9.2a2.7 2.7 0 0 1 3.8 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11" r=".9" fill="currentColor"/></svg>
+            <svg viewBox="0 0 27 13" width="27" height="13"><rect x=".7" y=".7" width="22" height="11.6" rx="3.6" fill="none" stroke="currentColor" stroke-opacity=".4"/><rect x="2.4" y="2.4" width="17" height="8.2" rx="2" fill="currentColor"/><path d="M24.4 4.4v4.2c1.1-.4 1.7-1.1 1.7-2.1s-.6-1.7-1.7-2.1Z" fill="currentColor" fill-opacity=".5"/></svg>
+          </span>
+        </div>
+
+        <div class="screens">
+
+          <section class="screen active" id="s-home">
+            <div class="pad">
+              <header class="home-head">
+                <div>
+                  <p class="eyebrow">Sat, 24 October</p>
+                  <h1 class="h1">Morning, Maya</h1>
+                </div>
+                <button class="avatar" aria-label="Profile" data-toast="Profile settings">M</button>
+              </header>
+
+              <div class="hero">
+                <div class="hero-top">
+                  <span class="overline">Net profit · October</span>
+                  <span class="delta">↑ 18.4%</span>
+                </div>
+                <div class="hero-amount"><span data-bind="profit">$12,480</span></div>
+                <p class="hero-sub">$1,940 more than September</p>
+                <div class="hero-chart">
+                  <svg viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="heroFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#A9B79F" stop-opacity=".38"/>
+                        <stop offset="1" stop-color="#A9B79F" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M0,48 C22,44 32,32 52,35 C72,38 82,47 102,42 C122,37 132,20 154,24 C176,28 184,14 206,17 C228,20 240,9 262,11 C278,12 290,6 300,5 L300,64 L0,64 Z" fill="url(#heroFill)"/>
+                    <path d="M0,48 C22,44 32,32 52,35 C72,38 82,47 102,42 C122,37 132,20 154,24 C176,28 184,14 206,17 C228,20 240,9 262,11 C278,12 290,6 300,5" fill="none" stroke="#CBD5C2" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="300" cy="5" r="3" fill="#F6F2E7"/>
+                  </svg>
+                </div>
+                <div class="hero-split">
+                  <div><span>Revenue</span><b data-bind="revenue">$18,240</b></div>
+                  <i class="vl"></i>
+                  <div><span>Expenses</span><b data-bind="expenses">$5,760</b></div>
+                </div>
+              </div>
+
+              <div class="quick">
+                <button class="quick-btn primary" data-go="scan">
+                  <span class="qicon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-camera"></use></svg></span>
+                  <span class="qlabel">Scan an item</span>
+                  <span class="qsub">Name &amp; price it in seconds</span>
+                </button>
+                <button class="quick-btn" data-sheet="expense">
+                  <span class="qicon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-receipt"></use></svg></span>
+                  <span class="qlabel">Add expense</span>
+                  <span class="qsub">Log a cost</span>
+                </button>
+              </div>
+
+              <div class="section-head">
+                <h2>Needs attention</h2>
+                <button class="link" data-go="inventory">View all</button>
+              </div>
+              <div class="hscroll" id="lowstock"></div>
+
+              <div class="section-head">
+                <h2>Recent activity</h2>
+              </div>
+              <ul class="activity">
+                <li>
+                  <span class="act-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-tag"></use></svg></span>
+                  <span class="act-main"><span class="act-title">Sale · Ceramic Mug</span><span class="act-sub">2 hours ago</span></span>
+                  <span class="act-amt">+ $24.00</span>
+                </li>
+                <li>
+                  <span class="act-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-receipt"></use></svg></span>
+                  <span class="act-main"><span class="act-title">Expense · Clay &amp; glaze</span><span class="act-sub">5 hours ago</span></span>
+                  <span class="act-amt neg">− $86.40</span>
+                </li>
+                <li>
+                  <span class="act-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-edit"></use></svg></span>
+                  <span class="act-main"><span class="act-title">Price updated · Film Camera</span><span class="act-sub">Yesterday</span></span>
+                  <span class="act-amt neg">$180.00</span>
+                </li>
+                <li>
+                  <span class="act-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-tag"></use></svg></span>
+                  <span class="act-main"><span class="act-title">Sale · Linen Tote</span><span class="act-sub">Yesterday</span></span>
+                  <span class="act-amt">+ $38.00</span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="screen dark" id="s-scan">
+            <div class="cam" id="scan-cam">
+              <div class="cam-glow"></div>
+              <div class="cam-shelf"></div>
+              <svg class="scan-object art" viewBox="0 0 120 120" aria-hidden="true"><use href="#art-mug"></use></svg>
+
+              <div class="scan-top">
+                <button class="glass-btn" data-go="home" aria-label="Close scanner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-x"></use></svg>
+                </button>
+                <span class="scan-title">Scan item</span>
+                <button class="glass-btn" aria-label="Flash" data-toast="Flash on">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-flash"></use></svg>
+                </button>
+              </div>
+
+              <div class="reticle">
+                <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
+                <div class="scanline"></div>
+                <div class="detect-chip"><span class="dot"></span>Ceramic Mug · 96% match</div>
+              </div>
+
+              <p class="scan-hint">Hold steady — we&rsquo;ll name the object and suggest a fair price.</p>
+
+              <div class="scan-bottom">
+                <button class="glass-btn small" aria-label="Choose from library" data-toast="Photo library">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-image"></use></svg>
+                </button>
+                <button class="shutter" id="shutter" aria-label="Capture object"><span></span></button>
+                <button class="glass-btn small" aria-label="Torch" data-toast="Torch on">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-bolt"></use></svg>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="screen" id="s-inventory">
+            <div class="pad">
+              <header class="page-head">
+                <div>
+                  <p class="eyebrow"><span id="inv-count">6 items</span> · <span data-bind-inv>$2,744</span> value</p>
+                  <h1 class="h1">Inventory</h1>
+                </div>
+                <button class="icon-btn" data-go="scan" aria-label="Scan new item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><use href="#i-plus"></use></svg>
+                </button>
+              </header>
+
+              <div class="search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-search"></use></svg>
+                <input id="search" type="text" placeholder="Search items" autocomplete="off" spellcheck="false" />
+              </div>
+
+              <div class="chips" id="inv-filters">
+                <button class="chip active" data-filter="All">All</button>
+                <button class="chip" data-filter="Low stock">Low stock</button>
+                <button class="chip" data-filter="Homeware">Homeware</button>
+                <button class="chip" data-filter="Accessories">Accessories</button>
+                <button class="chip" data-filter="Electronics">Electronics</button>
+                <button class="chip" data-filter="Stationery">Stationery</button>
+              </div>
+
+              <div id="inv-list"></div>
+
+              <div class="inv-foot">
+                <span>Inventory value</span>
+                <b data-bind-inv>$2,744</b>
+              </div>
+            </div>
+          </section>
+          <section class="screen" id="s-item">
+            <div class="pad">
+              <div class="detail-top">
+                <button class="icon-btn" data-go="inventory" aria-label="Back to inventory">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-back"></use></svg>
+                </button>
+                <button class="icon-btn" data-sheet="price" aria-label="Edit price">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-edit"></use></svg>
+                </button>
+              </div>
+
+              <div class="detail-art" id="d-art"></div>
+
+              <p class="eyebrow" id="d-cat">Homeware</p>
+              <h1 class="h1" id="d-name">Ceramic Mug</h1>
+              <div class="price-line">
+                <span class="big-price" id="d-price">$24.00</span>
+                <span class="tag soft" id="d-margin">63% margin</span>
+              </div>
+
+              <div class="stat-grid">
+                <div class="stat">
+                  <span>In stock</span>
+                  <div class="stepper">
+                    <button data-step="-1" aria-label="Remove one">−</button>
+                    <b id="d-stock">12</b>
+                    <button data-step="1" aria-label="Add one">+</button>
+                  </div>
+                </div>
+                <div class="stat"><span>Sold · October</span><b id="d-sold">46</b></div>
+                <div class="stat"><span>Revenue</span><b id="d-rev">$1,104</b></div>
+                <div class="stat"><span>Unit cost</span><b id="d-cost">$9.00</b></div>
+              </div>
+
+              <div class="cta-row">
+                <button class="btn ghost" data-sheet="price">Edit price</button>
+                <button class="btn primary" id="sell-btn">Record sale</button>
+              </div>
+
+              <div class="panel">
+                <div class="panel-head">
+                  <h3>Price history</h3>
+                  <span id="d-date">Last edited 12 Oct</span>
+                </div>
+                <div class="mini-chart">
+                  <svg viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M0,52 C20,52 26,52 40,52 L40,38 C54,38 62,38 78,38 L78,44 C92,44 100,44 118,44 L118,26 C132,26 140,26 158,26 L158,34 C176,34 186,34 204,34 L204,30 C224,30 238,30 262,30 L262,22 L300,22" fill="none" stroke="#14150F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M0,52 C20,52 26,52 40,52 L40,38 C54,38 62,38 78,38 L78,44 C92,44 100,44 118,44 L118,26 C132,26 140,26 158,26 L158,34 C176,34 186,34 204,34 L204,30 C224,30 238,30 262,30 L262,22 L300,22 L300,64 L0,64 Z" fill="#E6EBDF" opacity=".7"/>
+                    <circle cx="300" cy="22" r="3.2" fill="#54634E"/>
+                  </svg>
+                </div>
+                <div class="axis"><span>Aug</span><span>Sep</span><span>Oct</span></div>
+              </div>
+              <p class="hint" style="text-align:center;margin-top:12px">Recording a sale updates stock, revenue and profit.</p>
+            </div>
+          </section>
+
+          <section class="screen" id="s-insights">
+            <div class="pad">
+              <header class="page-head">
+                <div>
+                  <p class="eyebrow">October 2026</p>
+                  <h1 class="h1">Insights</h1>
+                </div>
+                <button class="icon-btn" data-toast="Report exported" aria-label="Share report">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-share"></use></svg>
+                </button>
+              </header>
+
+              <div class="seg" id="period">
+                <button data-period="Week">Week</button>
+                <button class="active" data-period="Month">Month</button>
+                <button data-period="Year">Year</button>
+              </div>
+
+              <div class="card">
+                <div class="card-head">
+                  <div>
+                    <span class="card-label">Revenue vs expenses</span>
+                    <span class="mnum" id="ins-rev">$18,240</span>
+                  </div>
+                  <span class="tag soft" id="ins-net">68% net</span>
+                </div>
+                <div class="chart" id="chart"></div>
+                <div class="legend">
+                  <span><i class="rev"></i>Revenue</span>
+                  <span><i class="exp"></i>Expenses</span>
+                  <span style="margin-left:auto">Expenses <b id="ins-exp" style="color:var(--ink);font-weight:600">$5,760</b></span>
+                </div>
+              </div>
+
+              <div class="grid2">
+                <div class="card">
+                  <span class="card-label">Gross margin</span>
+                  <div class="donut" id="donut"><span class="donut-in" id="donut-val">68%</span></div>
+                  <p class="note" id="donut-note">+2.1 pts vs September</p>
+                </div>
+                <div class="card">
+                  <span class="card-label">Avg. order value</span>
+                  <span class="mnum" style="font-size:22px">$41.20<span class="mnum-sub">+12%</span></span>
+                  <div class="avg-wrap">
+                    <div class="avg-spark">
+                      <svg viewBox="0 0 120 36" preserveAspectRatio="none" aria-hidden="true">
+                        <path d="M0,30 C12,28 16,20 28,22 C40,24 44,14 56,16 C68,18 74,8 86,11 C98,14 106,5 120,4" fill="none" stroke="#A9B79F" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M0,30 C12,28 16,20 28,22 C40,24 44,14 56,16 C68,18 74,8 86,11 C98,14 106,5 120,4 L120,36 L0,36 Z" fill="#E6EBDF" opacity=".8"/>
+                      </svg>
+                    </div>
+                    <p class="note" style="margin-top:7px">From 442 orders</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sellers">
+                <div class="section-label" style="margin:10px 0 2px">Top sellers</div>
+                <div id="top-sellers"></div>
+              </div>
+
+              <div class="callout">
+                <span class="ic-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-sparkle"></use></svg>
+                </span>
+                <p><b>Mugs are your profit engine.</b> 46 sold for $1,104 this month — 24% more than September. Consider a bundle with the stoneware bowl.</p>
+              </div>
+            </div>
+          </section>
+          <section class="screen" id="s-expenses">
+            <div class="pad">
+              <header class="page-head">
+                <div>
+                  <p class="eyebrow">October 2026</p>
+                  <h1 class="h1">Expenses</h1>
+                </div>
+                <button class="icon-btn" data-sheet="expense" aria-label="Add expense">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><use href="#i-plus"></use></svg>
+                </button>
+              </header>
+
+              <div class="hero exp-sum">
+                <div class="hero-top">
+                  <span class="overline">Total spent</span>
+                  <span class="delta" id="exp-entries">6 entries</span>
+                </div>
+                <div class="hero-amount"><span data-bind="expenses">$5,760</span></div>
+                <p class="hero-sub">Across supplies, rent and fees</p>
+                <div class="hero-split" style="border-top:0;padding-top:8px">
+                  <div><span>Revenue</span><b data-bind="revenue">$18,240</b></div>
+                  <i class="vl"></i>
+                  <div><span>Profit</span><b data-bind="profit">$12,480</b></div>
+                </div>
+              </div>
+
+              <button class="btn ghost" data-sheet="expense" style="margin-top:11px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><use href="#i-plus"></use></svg>
+                Log a new expense
+              </button>
+
+              <div class="section-label">Breakdown</div>
+              <div class="chips" id="exp-filters">
+                <button class="chip active" data-expfilter="All">All</button>
+                <button class="chip" data-expfilter="Supplies">Supplies</button>
+                <button class="chip" data-expfilter="Rent">Rent</button>
+                <button class="chip" data-expfilter="Shipping">Shipping</button>
+                <button class="chip" data-expfilter="Fees">Fees</button>
+                <button class="chip" data-expfilter="Utilities">Utilities</button>
+              </div>
+
+              <div class="exp-list" id="exp-list"></div>
+              <p class="exp-foot">Every expense updates your profit in real time.</p>
+            </div>
+          </section>
+
+        </div>
+
+        <nav class="tabbar" id="tabbar">
+          <button class="tab active" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home"></use></svg><span>Home</span></button>
+          <button class="tab" data-go="inventory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-box"></use></svg><span>Items</span></button>
+          <button class="tab scan" data-go="scan" aria-label="Scan item">
+            <span class="scan-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-camera"></use></svg></span>
+            <span>Scan</span>
+          </button>
+          <button class="tab" data-go="insights"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chart"></use></svg><span>Insights</span></button>
+          <button class="tab" data-go="expenses"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-receipt"></use></svg><span>Money</span></button>
+        </nav>
+
+        <div class="backdrop" id="backdrop"></div>
+        <div class="sheet" id="sheet-scan" role="dialog" aria-modal="true" aria-label="Detected item">
+          <div class="grab"></div>
+          <div class="sheet-head">
+            <div>
+              <p class="eyebrow">96% match · ready to price</p>
+              <h3 class="sheet-title">Item detected</h3>
+            </div>
+            <button class="icon-btn" data-close aria-label="Close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><use href="#i-x"></use></svg>
+            </button>
+          </div>
+
+          <div class="detect">
+            <div class="detect-thumb">
+              <svg class="art" viewBox="0 0 120 120" aria-hidden="true"><use href="#art-mug"></use></svg>
+            </div>
+            <div class="detect-field">
+              <label class="flabel" for="scan-name">Item name</label>
+              <input id="scan-name" class="input" type="text" value="Ceramic Mug" autocomplete="off" spellcheck="false" />
+              <div class="hint">Tap to rename — we&rsquo;ll remember it</div>
+            </div>
+          </div>
+
+          <label class="flabel">Category</label>
+          <div class="chips tight" id="scan-cats">
+            <button class="chip active" data-cat="Homeware">Homeware</button>
+            <button class="chip" data-cat="Accessories">Accessories</button>
+            <button class="chip" data-cat="Stationery">Stationery</button>
+            <button class="chip" data-cat="Electronics">Electronics</button>
+          </div>
+
+          <div class="price-box">
+            <div>
+              <span class="flabel">Suggested price</span>
+              <div class="price-input"><span>$</span><input id="scan-price" type="text" inputmode="decimal" value="24.00" /></div>
+            </div>
+            <div class="price-cost">
+              <span class="flabel">Unit cost</span>
+              <b>$9.00</b>
+              <span class="tag soft" id="scan-margin">63% margin</span>
+            </div>
+          </div>
+
+          <button class="btn primary" id="save-scan">Save to inventory</button>
+          <button class="btn text" data-close>Scan something else</button>
+        </div>
+
+        <div class="sheet" id="sheet-price" role="dialog" aria-modal="true" aria-label="Edit price">
+          <div class="grab"></div>
+          <div class="sheet-head">
+            <div>
+              <p class="eyebrow" id="ep-cat">Homeware</p>
+              <h3 class="sheet-title" id="ep-name">Ceramic Mug</h3>
+            </div>
+            <button class="icon-btn" data-close aria-label="Close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><use href="#i-x"></use></svg>
+            </button>
+          </div>
+
+          <div class="amount-display"><span class="cur">$</span><span id="ep-value">24.00</span></div>
+          <p class="amount-note"><b id="ep-margin">Margin 63%</b> · cost <span id="ep-cost">$9.00</span> per unit</p>
+
+          <div class="keypad" data-keypad="price">
+            <button class="key" data-key="1">1</button><button class="key" data-key="2">2</button><button class="key" data-key="3">3</button>
+            <button class="key" data-key="4">4</button><button class="key" data-key="5">5</button><button class="key" data-key="6">6</button>
+            <button class="key" data-key="7">7</button><button class="key" data-key="8">8</button><button class="key" data-key="9">9</button>
+            <button class="key" data-key=".">.</button><button class="key" data-key="0">0</button>
+            <button class="key" data-key="del" aria-label="Delete">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-del"></use></svg>
+            </button>
+          </div>
+
+          <button class="btn primary" id="save-price">Save new price</button>
+        </div>
+
+        <div class="sheet" id="sheet-expense" role="dialog" aria-modal="true" aria-label="New expense">
+          <div class="grab"></div>
+          <div class="sheet-head">
+            <div>
+              <p class="eyebrow">October 2026</p>
+              <h3 class="sheet-title">New expense</h3>
+            </div>
+            <button class="icon-btn" data-close aria-label="Close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><use href="#i-x"></use></svg>
+            </button>
+          </div>
+
+          <div class="amount-display"><span class="cur">$</span><span id="ex-value">0</span></div>
+          <p class="amount-note">What did you spend on?</p>
+
+          <div class="chips tight" id="ex-cats" style="margin-bottom:12px">
+            <button class="chip active" data-excat="Supplies">Supplies</button>
+            <button class="chip" data-excat="Rent">Rent</button>
+            <button class="chip" data-excat="Shipping">Shipping</button>
+            <button class="chip" data-excat="Fees">Fees</button>
+            <button class="chip" data-excat="Utilities">Utilities</button>
+          </div>
+
+          <input id="ex-note" class="input" type="text" placeholder="Note (optional)" autocomplete="off" style="margin-bottom:10px" />
+
+          <div class="keypad" data-keypad="expense">
+            <button class="key" data-key="1">1</button><button class="key" data-key="2">2</button><button class="key" data-key="3">3</button>
+            <button class="key" data-key="4">4</button><button class="key" data-key="5">5</button><button class="key" data-key="6">6</button>
+            <button class="key" data-key="7">7</button><button class="key" data-key="8">8</button><button class="key" data-key="9">9</button>
+            <button class="key" data-key=".">.</button><button class="key" data-key="0">0</button>
+            <button class="key" data-key="del" aria-label="Delete">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-del"></use></svg>
+            </button>
+          </div>
+
+          <button class="btn primary" id="save-expense">Add expense</button>
+        </div>
+        <div class="toast" id="toast"></div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="app.js?v=3"></script>
+</body>
+</html>
